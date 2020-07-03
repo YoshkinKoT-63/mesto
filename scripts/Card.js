@@ -2,6 +2,7 @@ class Card {
   constructor(place, showCard, api, userId) {
     this.placeName = place.name;
     this.placeLink = place.link;
+    this.likeCounter = place.likes.length;
     this.cardId = place._id;
     this.owner = place.owner;
     this.showCard = showCard;
@@ -43,7 +44,10 @@ class Card {
     this.placeCardDeleteIcon = document.createElement('button'); // кнопка удаления
     this.placeCardDescription = document.createElement('div'); // подпись
     this.placeCardName = document.createElement('h4'); //название
+    this.placeCardLikeContainer = document.createElement('div'); // блок с кнопкой и счетчиком лайков
     this.placeCardLikeIcon = document.createElement('button'); // кнопка лайк
+    this.placeCardLikeCounter = document.createElement('p'); // счетчик лайков
+
 
     //присвоим атрибуты
     this.placeCard.setAttribute('id', this.id);
@@ -54,6 +58,8 @@ class Card {
     
     this.placeCardDescription.classList.add('place-card__description');
     this.placeCardName.classList.add('place-card__name');
+    this.placeCardLikeContainer.classList.add('place-card__container');
+    this.placeCardLikeCounter.classList.add('place-card__like-counter');
     this.placeCardLikeIcon.classList.add('place-card__like-icon');
 
     //собираем блок с фото
@@ -61,7 +67,13 @@ class Card {
 
     //собираем блок с описанием
     this.placeCardDescription.appendChild(this.placeCardName);
-    this.placeCardDescription.appendChild(this.placeCardLikeIcon);
+    this.placeCardDescription.appendChild(this.placeCardLikeContainer);
+    //собираем блок с лайком и счётчиком
+    this.placeCardLikeContainer.appendChild(this.placeCardLikeIcon);
+    this.placeCardLikeContainer.appendChild(this.placeCardLikeCounter);
+
+    //количество лайков
+    this.placeCardLikeCounter.textContent = this.likeCounter; 
 
     //собираем карточку из блоков фото и описание
     this.placeCard.appendChild(this.placeCardImage);
