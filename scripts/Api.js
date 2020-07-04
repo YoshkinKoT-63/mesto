@@ -59,5 +59,25 @@ class Api {
     })
     .then((res) => this._getResponseData(res));
   }
+// Лайк---------------------------------------------------------------------------
+likeCard = (id) => {
+  return fetch(`${this.url}cards/like/${id}`, {
+    method: 'PUT',
+    headers: this.headers,
+    body: JSON.stringify({
+    })
+  })
+  .then((res) => this._getResponseData(res));
+}
+// Анлайк---------------------------------------------------------------------------
+unLikeCard = (id) => {
+  return fetch(`${this.url}cards/like/${id}`, {
+    method: 'DELETE',
+    headers: this.headers,
+    body: JSON.stringify({
+    })
+  })
+  .then((res) => this._getResponseData(res));
+}
 // --------------------------------------------------------------------------------
 }

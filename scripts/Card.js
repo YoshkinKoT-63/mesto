@@ -8,11 +8,39 @@ class Card {
     this.showCard = showCard;
     this.api = api;
     this.userId = userId;
+    this.likes = place.likes;
   }
 
-//лайк
+//лайк пользователя
+  isLiked() {
+    return Boolean(this.likes.find(item => item._id === this.userId));
+  };
+
+//лайки
   like = () => {
-    this.placeCardLikeIcon.classList.toggle('place-card__like-icon_liked');
+    if (this.isLiked()) {
+      this.api.unLikeCard(this.cardId)
+      .then(values => {
+        this.placeCardLikeCounter.textContent = values.likes.length;
+        this.likes = values.likes;
+        this.placeCardLikeIcon.classList.toggle('place-card__like-icon_liked');
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+    }
+    else {
+      this.api.likeCard(this.cardId)
+      .then(values => {
+        this.placeCardLikeCounter.textContent = values.likes.length;
+        this.likes = values.likes;
+        this.placeCardLikeIcon.classList.toggle('place-card__like-icon_liked');
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
   };
 
 //удаление карточки
@@ -72,6 +100,10 @@ class Card {
     this.placeCardLikeContainer.appendChild(this.placeCardLikeIcon);
     this.placeCardLikeContainer.appendChild(this.placeCardLikeCounter);
 
+    if (this.isLiked()) {
+      this.placeCardLikeIcon.classList.add('place-card__like-icon_liked');
+    }
+
     //количество лайков
     this.placeCardLikeCounter.textContent = this.likeCounter; 
 
@@ -93,7 +125,6 @@ class Card {
 
     //вешаем обработчики
     this.setEventListeners();
-
     //вернуть собранную карточку    
     return this.placeCard;
   };
